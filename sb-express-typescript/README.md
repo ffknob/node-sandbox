@@ -28,7 +28,7 @@ Install dev dependencies:
 `npm i --save-dev typescript nodemon ts-node @types/node @types/express`
 
 Install dependencies:
-`npm i express`
+`npm i --save express`
 
 Build:
 `npm run build`
