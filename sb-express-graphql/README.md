@@ -3,7 +3,7 @@ Initiate a Node project:
 
 Configure Node scripts in `package.json`:
 
-```
+```json
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
