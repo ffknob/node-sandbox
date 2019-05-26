@@ -1,32 +1,28 @@
-Initiate a Node project:
+- Initiate a Node project:
 `npm init -y`
 
-Configure Node scripts in `package.json`:
-
+- Configure Node scripts in `package.json`:
 ```json
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "nodemon src/app.ts",
-    "build": "tsc -p ."
+    "dev": "nodemon",
   },
 ```
 
-Install dev dependencies:
+- Install dev dependencies:
 `npm i --save-dev nodemon`
 
-Install dependencies:
+- Install dependencies:
 `npm i --save body-parser express express-graphql graphql lodash`
 
-Build:
-`npm run build`
+- Build:
+`npm build`
 
-Serve watching modifications in files:
+- Serve watching modifications in files:
 `npm run dev`
 
-GraphQL:
+- Access [http://localhost:3000/graphql](http://localhost:3000/graphql)
 
-Access [http://localhost:3000/graphql](http://localhost:3000/graphql)
-
+- GraphQL examples:
 ```graphql
 # Query Todos
 query QueryTodos {
