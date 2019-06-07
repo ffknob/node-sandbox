@@ -1,0 +1,26 @@
+<%- include('includes/head.ejs') %>
+
+<form
+  action="/search"
+  method="POST"
+  id="searchform"
+  onsubmit="event.preventDefault(); onSubmitSearchForm();"
+>
+  <select
+    id="indices-select"
+    name="indices"
+    form="searchform"
+    onchange="onIndexSelected(this.value);"
+  >
+  </select>
+
+  <select id="fields-select" name="fields" form="searchform"> </select>
+
+  <input id="terms-field" type="text" name="terms" />
+  <input type="submit" name="search" value="Search" />
+</form>
+
+<div id="results" style="display: none;">
+  Total: <span id="results-total"></span>
+  <ol id="results-list"></ol>
+</div>
