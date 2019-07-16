@@ -1,24 +1,15 @@
+- Install Oracle Instant Client
+
+- Configure ORacle Instant Client in LD_LIBRARY_PATH
+
 - Initiate a Node project:
   `npm init -y`
 
-- Configure Node scripts in `package.json`:
-
-```json
-  "scripts": {
-    "dev": "nodemon",
-  },
-```
-
-- Install dev dependencies:
-  `npm i --save-dev nodemon`
-
 - Install dependencies:
-  `npm i --save express body-parser morgan dotenv ejs @elastic/elasticsearch`
+  `npm i --save dotenv oracledb`
 
 - Build:
   `npm build`
 
-- Serve watching modifications in files:
-  `npm run dev`
-
-- Access [http://localhost:3000/](http://localhost:3000/)
+- Run:
+  `npm start`
