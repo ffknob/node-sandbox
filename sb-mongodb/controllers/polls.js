@@ -10,10 +10,10 @@ exports.getPolls = (req, res, next) => {
 };
 
 exports.getPoll = (req, res, next) => {
-	const _id = req.params._id;
+	const id = req.params.id;
 
 	Poll
-	.findById(_id)
+	.findById(id)
 	.then(poll => {
 		res.status(200).json(poll);
 	})
@@ -26,7 +26,7 @@ exports.createPoll = (req, res, next) => {
 	const question = req.body.question;
 	const options = req.body.options;
 
-	const poll = new Poll(title, question, options);
+	const poll = new Poll(null, title, question, options);
 	
 	poll
 	.save()
@@ -39,6 +39,19 @@ exports.createPoll = (req, res, next) => {
 
 
 exports.updatePoll = (req, res, next) => {
+	const id = req.params.id;
+	const title = req.body.title;
+	const question = req.body.question;
+	const options = req.body.options;
+
+	const poll = new Poll(id, title, question, options);
+	
+	poll
+	.save()
+	.then(result => {
+		res.status(200).send(`Object with id ${id} updated`);
+	})
+	.catch(err => { throw err; });
 };
 
 exports.deletePoll = (req, res, next) => {
