@@ -1,6 +1,12 @@
 const Poll = require('../models/poll');
 
 exports.getPolls = (req, res, next) => {
+	Poll
+	.findAll()
+	.then(polls => {
+		res.status(200).json(polls);
+	})
+	.catch(err => { throw err; });
 };
 
 exports.getPoll = (req, res, next) => {
@@ -21,6 +27,7 @@ exports.createPoll = (req, res, next) => {
 	})
 	.catch(err => { throw err; });
 };
+
 
 exports.updatePoll = (req, res, next) => {
 };
