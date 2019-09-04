@@ -6,8 +6,11 @@ const COLLECTION_NAME = 'polls';
 const LIMIT = 100;
 
 class Poll {
-	constructor(id, title, question, options) {
-		this.id = id;
+	constructor(_id, title, question, options) {
+		if (_id) {
+			this._id = new mongodb.ObjectId(_id);
+		}
+
 		this.title = title;
 		this.question = question;
 		this.options = options;		
@@ -17,10 +20,10 @@ class Poll {
 		const db = getDb();
 		let dbOp;
 
-		if (this.id) {
+		if (this._id) {
 			dbOp = db
 				.collection(COLLECTION_NAME)
-				.updateOne({ _id: new mongodb.ObjectId(this.id) }, {
+				.updateOne({ _id: this._id }, {
 					$set: this
 				});
 		} else {
@@ -41,11 +44,11 @@ class Poll {
 			.toArray();
 	}
 
-	static findById(id) {
+	static findById(_id) {
 		const db = getDb();
 		return db
 			.collection(COLLECTION_NAME)
-			.find({ _id: new mongodb.ObjectId(id) })
+			.find({ _id: _id })
 			.next();
 	}
 }
