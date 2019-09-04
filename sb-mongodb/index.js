@@ -1,15 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 const app = express();
 
-const mongoConnect = require('./services/mongodb');
+const mongoConnect = require('./services/mongodb').mongoConnect;
 
-const routes = require('./routes/routes');
+const pollsRoutes = require('./routes/polls');
+
+app.use(morgan('tiny'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use('/', routes);
+app.use('/polls', pollsRoutes);
 
 app.use((err, req, res, next) => {
 	console.log(err);
@@ -19,7 +23,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-mongoConnect(client => {
-	console.log(client);
-	app.listen(PORT), () => console.log(`Server running on port ${PORT}`);
+mongoConnect(() => {
+	app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

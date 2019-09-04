@@ -1,4 +1,6 @@
-const mongoConnect = require('../services/mongodb');
+const getDb = require('../services/mongodb').getDb;
+
+const COLLECTION_NAME = 'polls';
 
 class Poll {
 	constructor(title, question, options) {
@@ -8,7 +10,9 @@ class Poll {
 	}
 
 	save() {
-		mongoConnect
+		const db = getDb();
+		return db.collection(COLLECTION_NAME)
+		.insertOne(this);
 	}
 }
 
