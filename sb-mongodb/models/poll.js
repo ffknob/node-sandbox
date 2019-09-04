@@ -44,12 +44,20 @@ class Poll {
 			.toArray();
 	}
 
-	static findById(_id) {
+	static findById(id) {
 		const db = getDb();
 		return db
 			.collection(COLLECTION_NAME)
-			.find({ _id: _id })
+			.find({ _id: new mongodb.ObjectId(id) })
 			.next();
+	}
+
+	static deleteById(id) {
+		const db = getDb();
+
+		return db
+			.collection(COLLECTION_NAME)
+			.deleteOne({ _id: new mongodb.ObjectId(id) });
 	}
 }
 

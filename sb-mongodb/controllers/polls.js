@@ -55,4 +55,16 @@ exports.updatePoll = (req, res, next) => {
 };
 
 exports.deletePoll = (req, res, next) => {
+	const _id = req.params._id;
+
+	Poll
+	.deleteById(_id)
+	.then(result => {
+		if (result.deletedCount > 0) {
+			res.status(200).send(`Object with id ${_id} deleted`);
+		} else {
+			res.status(200).send(`Object with id ${_id} NOT deleted`);
+		}
+	})
+	.catch(err => { throw err; });
 };
