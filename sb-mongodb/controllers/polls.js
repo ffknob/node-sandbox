@@ -39,31 +39,31 @@ exports.createPoll = (req, res, next) => {
 
 
 exports.updatePoll = (req, res, next) => {
-	const _id = req.params._id;
+	const id = req.params.id;
 	const title = req.body.title;
 	const question = req.body.question;
 	const options = req.body.options;
 
-	const poll = new Poll(_id, title, question, options);
+	const poll = new Poll(id, title, question, options);
 	
 	poll
 	.save()
 	.then(result => {
-		res.status(200).send(`Object with id ${_id} updated`);
+		res.status(200).send(`Object with id ${id} updated`);
 	})
 	.catch(err => { throw err; });
 };
 
 exports.deletePoll = (req, res, next) => {
-	const _id = req.params._id;
+	const id = req.params.id;
 
 	Poll
-	.deleteById(_id)
+	.deleteById(id)
 	.then(result => {
 		if (result.deletedCount > 0) {
-			res.status(200).send(`Object with id ${_id} deleted`);
+			res.status(200).send(`Object with id ${id} deleted`);
 		} else {
-			res.status(200).send(`Object with id ${_id} NOT deleted`);
+			res.status(200).send(`Object with id ${id} NOT deleted`);
 		}
 	})
 	.catch(err => { throw err; });

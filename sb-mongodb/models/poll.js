@@ -6,11 +6,8 @@ const COLLECTION_NAME = 'polls';
 const LIMIT = 100;
 
 class Poll {
-	constructor(_id, title, question, options) {
-		if (_id) {
-			this._id = new mongodb.ObjectId(_id);
-		}
-
+	constructor(id, title, question, options) {
+		this._id = id ? new mongodb.ObjectId(id) : null;
 		this.title = title;
 		this.question = question;
 		this.options = options;		
