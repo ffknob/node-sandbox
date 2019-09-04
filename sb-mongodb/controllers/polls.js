@@ -10,6 +10,15 @@ exports.getPolls = (req, res, next) => {
 };
 
 exports.getPoll = (req, res, next) => {
+	const _id = req.params._id;
+
+	Poll
+	.findById(_id)
+	.then(poll => {
+		res.status(200).json(poll);
+	})
+	.catch(err => { throw err; });
+
 };
 
 exports.createPoll = (req, res, next) => {

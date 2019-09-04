@@ -1,3 +1,5 @@
+const mongodb = require('mongodb');
+
 const getDb = require('../services/mongodb').getDb;
 
 const COLLECTION_NAME = 'polls';
@@ -22,6 +24,13 @@ class Poll {
 		.find()
 		.limit(limit || LIMIT)
 		.toArray();
+	}
+
+	static findById(_id) {
+		const db = getDb();
+		return db.collection(COLLECTION_NAME)
+		.find({ _id: mongodb.ObjectId(_id) })
+		.next();
 	}
 }
 
