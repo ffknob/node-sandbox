@@ -23,7 +23,7 @@ exports.getCart = (req, res, next) => {
 
 exports.createCart = (req, res, next) => {
 	const user = req.user;
-	const items = req.params.items;
+	const items = req.body.items;
 
 	const cart = new Cart(null, user._id, Date.now(), items);
 	
@@ -69,6 +69,36 @@ exports.deleteCart = (req, res, next) => {
 		} else {
 			res.status(200).send(`Cart with id ${_id} NOT deleted`);
 		}
+	})
+	.catch(err => { throw err; });
+};
+
+exports.createOrder = (req, res, next) => {
+	const _id = req.params._id;
+
+	Cart
+	.findById(_id)
+	.then(_cart => {
+		const cart = new Cart(
+			_cart._id,
+			_cart.userId,
+			_cart.createdAt,
+			_cart.items
+		);
+
+		cart
+		.createOrder()
+		.then(result => {
+			const orderId = result.insertedId;
+
+			cart
+			.delete()
+			.then(result => {
+				res.status(200).send(`Order created with id ${orderId} from cart ${_id}`);
+			})
+			.catch(err => { throw err; });			
+		})
+		.catch(err => { throw err; });	
 	})
 	.catch(err => { throw err; });
 };

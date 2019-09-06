@@ -33,6 +33,12 @@ class User {
         return dbOp;
     }
 
+    delete() {
+		const db = getDb();
+		return db
+			.collection(COLLECTION)
+			.deleteOne({ _id: new mongodb.ObjectId(this._id) });
+    }
 
     static findAll() {
         const db = getDb();

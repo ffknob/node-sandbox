@@ -9,4 +9,6 @@ router.post('', cartsController.createCart);
 router.put('/:_id', cartsController.updateCart);
 router.delete('/:_id', cartsController.deleteCart);
 
+router.post('/:_id/create-order', cartsController.createOrder);
+
 module.exports = router;

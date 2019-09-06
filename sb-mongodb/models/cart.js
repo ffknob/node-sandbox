@@ -2,6 +2,8 @@ const mongodb = require('mongodb');
 
 const getDb = require('../services/mongodb').getDb;
 
+const Order = require('./order');
+
 const COLLECTION = 'carts';
 const LIMIT = 100;
 
@@ -32,6 +34,13 @@ class Cart {
 		return dbOp;
 	}
 
+	delete() {
+		const db = getDb();
+		return db
+			.collection(COLLECTION)
+			.deleteOne({ _id: new mongodb.ObjectId(this._id) });
+	}
+
     addItem(product, quantity) {
         const db = getDb();
 
@@ -59,9 +68,17 @@ class Cart {
         .collection(COLLECTION)
         .updateOne(
             { _id: new mongodb.ObjectId(this._id) },
-            this
+            updatedCart
         );
-    }
+	}
+	
+	createOrder() {
+		const sevenDays = 24*60*60*7;
+		const order = new Order(null, this.userId, Date.now(), Date.now() + sevenDays, false, this.items);
+
+		return order
+			.save();
+	}
 
 	static findAll(limit) {
 		const db = getDb();

@@ -14,8 +14,8 @@ class Order {
 				items) {
 		this._id = _id ? new mongodb.ObjectId(_id) : null;
         this.userId = userId;
-		this.createdAt = createdAt;
-		this.validUntil = validUntil;
+		this.createdAt = createdAt || Date.now();
+		this.validUntil = validUntil || Date.now();
 		this.isPaid = isPaid;
         this.items = items;
 	}
@@ -37,6 +37,13 @@ class Order {
 		}
 
 		return dbOp;
+	}
+	
+	delete() {
+		const db = getDb();
+		return db
+			.collection(COLLECTION)
+			.deleteOne({ _id: new mongodb.ObjectId(this._id) });
 	}
 
 	static findAll(limit) {
