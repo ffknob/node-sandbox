@@ -12,7 +12,7 @@
 `npm i --save-dev nodemon`
 
 - Install dependencies:
-`npm i --save express body-parser mongodb dotenv morgan`
+`npm i --save express body-parser mongoose dotenv morgan`
 
 - Build:
 `npm build`

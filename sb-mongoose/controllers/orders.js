@@ -2,7 +2,7 @@ const Order = require('../models/order');
 
 exports.getOrders = (req, res, next) => {
 	Order
-	.findAll()
+	.find()
 	.then(orders => {
 		res.status(200).json(orders);
 	})
@@ -26,12 +26,18 @@ exports.createOrder = (req, res, next) => {
 	const items = req.params.items;
 	const sevenDays = 24*60*60*7;
 
-	const order = new Order(null, user._id, Date.now(), Date.now() + sevenDays, false, items);
+	const order = new Order({
+		userId: user._id,
+		createdAt: Date.now(),
+		dueAt: Date.now() + sevenDays,
+		isPaid: false,
+		items: items
+	});
 	
 	order
 	.save()
 	.then(result => {
-		res.status(200).send(`Order created with id ${result.insertedId}`);
+		res.status(200).send(`Order ${result._id} created`);
 	})
 	.catch(err => { throw err; });
 };
@@ -43,19 +49,14 @@ exports.updateOrder = (req, res, next) => {
 
 	Order
 	.findById(_id)
-	.then(_order => {
-		const order = new Order(
-			_order._id,
-			_order.userId,
-			_order.createdAt,
-			_order.validUntil,
-			isPaid,
-			items);
+	.then(order => {
+		order.isPaid = isPaid;
+		order.items = items;
 
 		order
 		.save()
 		.then(result => {
-			res.status(200).send(`Order with id ${_id} updated`);
+			res.status(200).send(`Order ${_id} updated`);
 		})
 		.catch(err => { throw err; });
 	})
@@ -66,12 +67,12 @@ exports.deleteOrder = (req, res, next) => {
 	const _id = req.params._id;
 
 	Order
-	.deleteById(_id)
+	.findByIdAndRemove(_id)
 	.then(result => {
-		if (result.deletedCount > 0) {
-			res.status(200).send(`Order with id ${_id} deleted`);
+		if (result) {
+			res.status(200).send(`Order ${_id} deleted`);
 		} else {
-			res.status(200).send(`Order with id ${_id} NOT deleted`);
+			res.status(200).send(`Order ${_id} NOT deleted`);
 		}
 	})
 	.catch(err => { throw err; });
