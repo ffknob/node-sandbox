@@ -6,7 +6,7 @@ exports.getCarts = (req, res, next) => {
 	.then(carts => {
 		res.status(200).json(carts);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.getCart = (req, res, next) => {
@@ -17,8 +17,7 @@ exports.getCart = (req, res, next) => {
 	.then(cart => {
 		res.status(200).json(cart);
 	})
-	.catch(err => { throw err; });
-
+	.catch(err => next(err));
 };
 
 exports.createCart = (req, res, next) => {
@@ -30,9 +29,9 @@ exports.createCart = (req, res, next) => {
 	cart
 	.save()
 	.then(result => {
-		res.status(200).send(`Cart created with id ${result.insertedId}`);
+		res.status(200).send(`Cart ${result.insertedId} created`);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.updateCart = (req, res, next) => {
@@ -51,11 +50,11 @@ exports.updateCart = (req, res, next) => {
 		cart
 		.save()
 		.then(result => {
-			res.status(200).send(`Cart with id ${_id} updated`);
+			res.status(200).send(`Cart ${_id} updated`);
 		})
-		.catch(err => { throw err; });
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.deleteCart = (req, res, next) => {
@@ -65,12 +64,12 @@ exports.deleteCart = (req, res, next) => {
 	.deleteById(_id)
 	.then(result => {
 		if (result.deletedCount > 0) {
-			res.status(200).send(`Cart with id ${_id} deleted`);
+			res.status(200).send(`Cart ${_id} deleted`);
 		} else {
-			res.status(200).send(`Cart with id ${_id} NOT deleted`);
+			res.status(200).send(`Cart ${_id} NOT deleted`);
 		}
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.createOrder = (req, res, next) => {
@@ -94,11 +93,11 @@ exports.createOrder = (req, res, next) => {
 			cart
 			.delete()
 			.then(result => {
-				res.status(200).send(`Order created with id ${orderId} from cart ${_id}`);
+				res.status(200).send(`Order ${orderId} created from cart ${_id}`);
 			})
-			.catch(err => { throw err; });			
+			.catch(err => next(err));
 		})
-		.catch(err => { throw err; });	
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };

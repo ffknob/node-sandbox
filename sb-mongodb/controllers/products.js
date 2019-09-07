@@ -6,7 +6,7 @@ exports.getProducts = (req, res, next) => {
 	.then(products => {
 		res.status(200).json(products);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.getProduct = (req, res, next) => {
@@ -17,8 +17,7 @@ exports.getProduct = (req, res, next) => {
 	.then(product => {
 		res.status(200).json(product);
 	})
-	.catch(err => { throw err; });
-
+	.catch(err => next(err));
 };
 
 exports.createProduct = (req, res, next) => {
@@ -32,9 +31,9 @@ exports.createProduct = (req, res, next) => {
 	product
 	.save()
 	.then(result => {
-		res.status(200).send(`Product created with id ${result.insertedId}`);
+		res.status(200).send(`Product ${result.insertedId} created`);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.updateProduct = (req, res, next) => {
@@ -57,11 +56,11 @@ exports.updateProduct = (req, res, next) => {
 		product
 		.save()
 		.then(result => {
-			res.status(200).send(`Product with id ${_id} updated`);
+			res.status(200).send(`Product ${_id} updated`);
 		})
-		.catch(err => { throw err; });
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.deleteProduct = (req, res, next) => {
@@ -71,10 +70,10 @@ exports.deleteProduct = (req, res, next) => {
 	.deleteById(_id)
 	.then(result => {
 		if (result.deletedCount > 0) {
-			res.status(200).send(`Product with id ${_id} deleted`);
+			res.status(200).send(`Product ${_id} deleted`);
 		} else {
-			res.status(200).send(`Product with id ${_id} NOT deleted`);
+			res.status(200).send(`Product ${_id} NOT deleted`);
 		}
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };

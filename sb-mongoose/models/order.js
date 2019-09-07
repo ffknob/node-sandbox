@@ -8,7 +8,7 @@ const orderSchema = new Schema({
 	dueAt: { type: Date, required: true },
 	isPaid: {type: Boolean },
 	items: [{ 
-		productId: { type: mongoose.Types.ObjectId, required: true },
+		product: { type: Object, required: true },
 		quantity: { type: Number, required: true }
 	}]
 });

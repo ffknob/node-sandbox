@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 	User
 	.findById('5d73aa971c9d4400007ad83f')
 	.then(user => {
-		req.user = new User(user._id, user.username, user.password, user.name, user.email);
+		req.user = user;
 		next();
 	})
 	.catch(err => next(err));
@@ -31,7 +31,6 @@ app.use('/orders', ordersRoutes);
 
 app.use((err, req, res, next) => {
 	console.log(err);
-
 	res.status(500).send('Internal server error');
 });
 

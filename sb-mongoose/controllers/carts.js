@@ -3,10 +3,12 @@ const Cart = require('../models/cart');
 exports.getCarts = (req, res, next) => {
 	Cart
 	.find()
+	.populate('userId')
+	.populate('items.productId')
 	.then(carts => {
 		res.status(200).json(carts);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.getCart = (req, res, next) => {
@@ -14,13 +16,13 @@ exports.getCart = (req, res, next) => {
 
 	Cart
 	.findById(_id)
-	.populate('cart.items.productId')
+	.populate('userId')
+	.populate('items.productId')
 	.execPopulate()
 	.then(cart => {
 		res.status(200).json(cart);
 	})
-	.catch(err => { throw err; });
-
+	.catch(err => next(err));
 };
 
 exports.createCart = (req, res, next) => {
@@ -38,7 +40,7 @@ exports.createCart = (req, res, next) => {
 	.then(result => {
 		res.status(200).send(`Cart ${result._id} created`);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.updateCart = (req, res, next) => {
@@ -55,9 +57,9 @@ exports.updateCart = (req, res, next) => {
 		.then(result => {
 			res.status(200).send(`Cart ${_id} updated`);
 		})
-		.catch(err => { throw err; });
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.deleteCart = (req, res, next) => {
@@ -72,7 +74,7 @@ exports.deleteCart = (req, res, next) => {
 			res.status(200).send(`Cart ${_id} NOT deleted`);
 		}
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.createOrder = (req, res, next) => {
@@ -91,9 +93,9 @@ exports.createOrder = (req, res, next) => {
 			.then(result => {
 				res.status(200).send(`Order ${orderId} created from cart ${_id}`);
 			})
-			.catch(err => { throw err; });			
+			.catch(err => next(err));
 		})
-		.catch(err => { throw err; });	
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };

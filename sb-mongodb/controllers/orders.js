@@ -6,7 +6,7 @@ exports.getOrders = (req, res, next) => {
 	.then(orders => {
 		res.status(200).json(orders);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.getOrder = (req, res, next) => {
@@ -17,8 +17,7 @@ exports.getOrder = (req, res, next) => {
 	.then(order => {
 		res.status(200).json(order);
 	})
-	.catch(err => { throw err; });
-
+	.catch(err => next(err));
 };
 
 exports.createOrder = (req, res, next) => {
@@ -31,9 +30,9 @@ exports.createOrder = (req, res, next) => {
 	order
 	.save()
 	.then(result => {
-		res.status(200).send(`Order created with id ${result.insertedId}`);
+		res.status(200).send(`Order ${result.insertedId} created`);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.updateOrder = (req, res, next) => {
@@ -55,11 +54,11 @@ exports.updateOrder = (req, res, next) => {
 		order
 		.save()
 		.then(result => {
-			res.status(200).send(`Order with id ${_id} updated`);
+			res.status(200).send(`Order ${_id} updated`);
 		})
-		.catch(err => { throw err; });
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.deleteOrder = (req, res, next) => {
@@ -69,10 +68,10 @@ exports.deleteOrder = (req, res, next) => {
 	.deleteById(_id)
 	.then(result => {
 		if (result.deletedCount > 0) {
-			res.status(200).send(`Order with id ${_id} deleted`);
+			res.status(200).send(`Order ${_id} deleted`);
 		} else {
-			res.status(200).send(`Order with id ${_id} NOT deleted`);
+			res.status(200).send(`Order ${_id} NOT deleted`);
 		}
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };

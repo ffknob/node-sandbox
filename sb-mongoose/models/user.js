@@ -9,4 +9,12 @@ const userSchema = new Schema({
     email: { type: String, required: true }
 });
 
+userSchema.query.byEmail = function(email) {
+    return this.where({ email: new RegExp(email, 'i') });
+};
+
+userSchema.query.byUsername = function(username) {
+    return this.where({ email: new RegExp(username, 'i') });
+};
+
 module.exports = mongoose.model('User', userSchema);

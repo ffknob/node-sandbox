@@ -3,10 +3,11 @@ const Order = require('../models/order');
 exports.getOrders = (req, res, next) => {
 	Order
 	.find()
+	.populate('userId')
 	.then(orders => {
 		res.status(200).json(orders);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.getOrder = (req, res, next) => {
@@ -14,11 +15,11 @@ exports.getOrder = (req, res, next) => {
 
 	Order
 	.findById(_id)
+	.populate('userId')	
 	.then(order => {
 		res.status(200).json(order);
 	})
-	.catch(err => { throw err; });
-
+	.catch(err => next(err));
 };
 
 exports.createOrder = (req, res, next) => {
@@ -39,7 +40,7 @@ exports.createOrder = (req, res, next) => {
 	.then(result => {
 		res.status(200).send(`Order ${result._id} created`);
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.updateOrder = (req, res, next) => {
@@ -58,9 +59,9 @@ exports.updateOrder = (req, res, next) => {
 		.then(result => {
 			res.status(200).send(`Order ${_id} updated`);
 		})
-		.catch(err => { throw err; });
+		.catch(err => next(err));
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
 
 exports.deleteOrder = (req, res, next) => {
@@ -75,5 +76,5 @@ exports.deleteOrder = (req, res, next) => {
 			res.status(200).send(`Order ${_id} NOT deleted`);
 		}
 	})
-	.catch(err => { throw err; });
+	.catch(err => next(err));
 };
