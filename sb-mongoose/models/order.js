@@ -11,6 +11,13 @@ const orderSchema = new Schema({
 		product: { type: Object, required: true },
 		quantity: { type: Number, required: true }
 	}]
+},
+{ toObject: { virtuals: true }, toJSON: { virtuals: true } } );
+
+orderSchema.virtual('total').get(function() {
+	return this.items.reduce((acc, curr) => {
+		return acc + (curr.quantity * curr.product.price);
+	}, 0);
 });
 
 module.exports = mongoose.model('Order', orderSchema);
