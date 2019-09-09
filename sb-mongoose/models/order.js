@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
 	userId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
-	createdAt: { type: Date, required: true },
+	createdAt: { type: Date, required: true, default: Date.now },
 	dueAt: { type: Date, required: true },
 	isPaid: {type: Boolean },
 	items: [{ 

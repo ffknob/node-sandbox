@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
 	userId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
-	createdAt: { type: Date, required: true },
+	createdAt: { type: Date, required: true, default: Date.now },
 	items: [{ 
 		productId: { type: mongoose.Types.ObjectId, required: true, ref: 'Product' },
 		quantity: { type: Number, required: true }
