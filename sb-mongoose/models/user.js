@@ -14,7 +14,7 @@ userSchema.query.byEmail = function(email) {
 };
 
 userSchema.query.byUsername = function(username) {
-    return this.where({ email: new RegExp(username, 'i') });
+    return this.where({ username: new RegExp(username, 'i') });
 };
 
 module.exports = mongoose.model('User', userSchema);
